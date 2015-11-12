@@ -1,0 +1,30 @@
+.menu {
+	background-color: $dark;
+	.scroll-content {
+		.list {
+			.item {
+				text-align: center;
+				background-color: $dark;
+				border: 0px;
+				.icon {
+					font-size: 2em;
+					color: white;
+				}
+				&-complex {
+					padding: inherit;
+					a {
+						background-color: $dark;
+						text-align: center;
+						padding: 15px 0px;
+					}
+				}
+			}
+		}
+	}
+}
+
+.bar {
+	&.bar-header {
+		background-color: transparent;
+	}
+}
