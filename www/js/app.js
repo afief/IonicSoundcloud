@@ -1,6 +1,13 @@
+var client_id = "7e747f7d6f9eedfbf64282e8d5ef8673";
+
 angular.module('starter', ['ionic', 'starter.controllers'])
 
 .run(function($ionicPlatform) {
+
+	SC.initialize({
+		client_id: client_id
+	});
+
 	$ionicPlatform.ready(function() {
 
 		if (window.cordova && window.cordova.plugins.Keyboard) {
@@ -11,6 +18,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 		if (window.StatusBar) {
 			StatusBar.styleDefault();
 		}
+
 	});
 })
 
@@ -32,6 +40,24 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 			}
 		}
 	})
+	.state('app.search', {
+		url: '/search',
+		views: {
+			content: {
+				templateUrl: 'html/search.html',
+				controller: 'SearchCtrl'
+			}
+		}
+	})
+	.state('app.play', {
+		url: '/play/:soundcloud_id',
+		views: {
+			content: {
+				templateUrl: 'html/player.html',
+				controller: 'PlayerCtrl'
+			}
+		}
+	})
 	.state('app.profile', {
 		url: '/profile',
 		views: {
@@ -45,14 +71,6 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 		views: {
 			content: {
 				templateUrl: 'html/message.html'
-			}
-		}
-	})
-	.state('app.project', {
-		url: '/project',
-		views: {
-			content: {
-				templateUrl: 'html/project.html'
 			}
 		}
 	})

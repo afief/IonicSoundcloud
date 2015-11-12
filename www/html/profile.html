@@ -1,7 +1,44 @@
-<ion-view view-title="Profile">
+<ion-view view-title="Profile" class="page-profile">
+
+	<div class="bg-profile" style="background-image: url('img/bg-profile.jpg');"></div>
+
 	<ion-content>
 
-		<ion-refresher pulling-text="Pull to refresh ..." on-refresh="doRefresh()"></ion-refresher>
+		<ion-slide-box class="user-wrapper">
+			<ion-slide>
+				<div class="user-profile">
+					<div class="avatar" style="background-image: url('img/profile.jpg');"></div>
+					<div class="name">Afief Yona Ramadhana</div>
+					<div class="row">
+						<div class="col col-50 left"> <b>150</b>
+							Posts
+						</div>
+						<div class="col col-50 right"> <b>75</b>
+							Favorites
+						</div>
+					</div>
+				</div>
+			</ion-slide>
+			<ion-slide>
+				<div class="user-bio">
+					Sebagai alumni ESQ yang sudah 5 tahun bergelut dengan dunia nyata. Saya Siap! <br>
+					Sebagai alumni ESQ yang sudah 5 tahun bergelut dengan dunia nyata. Saya Siap!
+				</div>
+			</ion-slide>
+		</ion-slide-box>
+
+		<div class="card" ng-repeat="num in [1,2,3,4,5,6]">
+			<div class="avatar" style="background-image: url('img/profile.jpg');"></div>
+
+			<div class="item item-image">
+				<img src="img/bg-profile.jpg">
+  			</div>
+
+  			<div class="item">
+    			Alumni ESQ harus siap segalanya.
+  			</div>
+
+		</div>
 
 	</ion-content>
 </ion-view>

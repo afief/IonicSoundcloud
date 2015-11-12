@@ -1,0 +1,14 @@
+<ion-view view-title="Player" class="page-player">
+	<ion-content>
+
+		<audio id="playerElement"></audio>
+
+		<div class="controller">
+			<img src="{{song.waveform_url}}" alt="">
+			<div class="button play" ng-click="doPlay()">
+				<i class="icon ion-play" ng-class="{'ion-play': !isPlaying, 'ion-pause': isPlaying}"></i>
+			</div>
+		</div>
+
+	</ion-content>
+</ion-view>
