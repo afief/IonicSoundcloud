@@ -13,12 +13,11 @@
 			<div class="item item-avatar item-icon-right">
 				<img ng-src="{{res.user.avatar_url}}">
 				<h2>{{res.title}}</h2>
-				<p>{{res.user.username}}</p>
-				<i class="icon icon-text">{{durationToTime(res.duration)}}</i>
+				<p>{{res.user.username}}</p> <i class="icon icon-text">{{durationToTime(res.duration)}}</i>
 			</div>
 
 		</div>
 
-		<button class="button button-clear icon-left ion-refresh bt-loadmore" ng-if="canLoadMore()" ng-click="loadMore()">Load More</button>
+		<ion-infinite-scroll ng-if="canLoadMore()" icon="ion-loading-c" on-infinite="loadMore()" immediate-check="false"></ion-infinite-scroll>
 	</ion-content>
 </ion-view>

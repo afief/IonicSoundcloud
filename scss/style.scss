@@ -35,6 +35,20 @@
 			.button {
 				color: white;
 			}
+			.back-button {
+				.icon, .icon:before {
+					font-size: 1em;
+					margin: 0px 5px;
+				}
+				.default-title, .previous-title {
+					font-size: 0.8em;
+					margin-top: -1px;
+					display: table;
+					&.hide {
+						display: none;
+					}
+				}
+			}
 		}
 	}
 	.view-container {
@@ -128,35 +142,45 @@
 			}
 		}
 	}
-	.bt-loadmore {
-		margin: 10px auto;
-		display: table;
-	}
 }
 
 .page-player {
+	.item-bg-image {
+		padding: 0px;
+		margin: 0px;
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
 	.controller {
-		position: absolute;
-		bottom: 0px;
-		left: 0px;
+		background-color: rgba(62, 39, 35, 0.49);
+		display: table;
 		width: 100%;
 		.buttons {
 			display: table;
-			margin: 10px auto;
+			margin: 20px auto;
 			.button {
 				border-radius: 50%;
 				width: 50px;
 				height: 50px;
 				padding: 3px;
+				margin: 0px 5px;
 				background-color: transparent;
 				color: $energized;
 				border: solid 2px $energized;
+				&.backward, &.forward {
+					width: 30px;
+					height: 30px;
+					padding: 1px;
+					.icon:after {
+						font-size: 0.8em;
+					}
+				}
 			}
 		}
 		.seek-bar {
 			position: relative;
 			width: 95%;
-			margin: 30px auto;
+			margin: 20px auto;
 			height: 10px;
 			.seek {
 				width: 100%;
@@ -164,15 +188,21 @@
 				position: absolute;
 				top: 0px;
 				left: 0px;
-				background-color: $dark2;
+				background-color: $stable;
 				border-radius: 10px;
 				&-green {
 					background-color: $energized;
 				}
 				&-grey {
-					background-color: $dark;
+					background-color: grey;
 				}
 			}
+		}
+	}
+	.ion-heart {
+		color: $dark;
+		&.loved {
+			color: $positive;
 		}
 	}
 }

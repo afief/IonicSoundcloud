@@ -1,11 +1,10 @@
-var client_id = "7e747f7d6f9eedfbf64282e8d5ef8673";
-
-angular.module('starter', ['ionic', 'starter.controllers'])
+angular.module('starter', ['ionic', 'starter.controllers', 'UserModule'])
 
 .run(function($ionicPlatform) {
 
 	SC.initialize({
-		client_id: client_id
+		client_id: client_id,
+		redirect_uri: redirect_uri
 	});
 
 	$ionicPlatform.ready(function() {

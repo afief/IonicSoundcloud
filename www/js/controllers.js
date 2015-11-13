@@ -1,6 +1,6 @@
 var controll = angular.module('starter.controllers', []);
 
-controll.controller('AppCtrl', ['$scope', '$ionicModal', '$timeout', '$ionicLoading', function($scope, $ionicModal, $timeout, $ionicLoading) {
+controll.controller('AppCtrl', ['$scope', '$ionicModal', '$timeout', '$ionicLoading', 'user', function($scope, $ionicModal, $timeout, $ionicLoading, user) {
 
 
 	$scope.doRefresh = function() {
@@ -11,12 +11,35 @@ controll.controller('AppCtrl', ['$scope', '$ionicModal', '$timeout', '$ionicLoad
 			$scope.$broadcast('scroll.refreshComplete');
 		}, 2000);
 
+	}	
+
+	$scope.doLogin = function() {	
+
+		if (user.loadData('accessToken'))	 {
+			SC.accessToken(user.loadData('accessToken'));
+			getUser();
+		} else {
+			SC.connect(function(){
+				getUser();
+			});
+		}
+
+
+		function getUser() {
+			SC.get("/me",function(e){
+				console.log(e);
+				user.profile = e;
+				user.saveData("profile", e);
+				user.saveData("accessToken", SC.accessToken());
+			});
+		}
+
 	}
 	
 
 }]);
 
-controll.controller('SearchCtrl', ['$scope', "$state", "$ionicLoading", function($scope, $state, $ionicLoading) {
+controll.controller('SearchCtrl', ['$scope', "$state", "$ionicLoading", "$ionicPopup", function($scope, $state, $ionicLoading, $ionicPopup) {
 	var maxResult = 28;
 	var limit = 7;
 	var offset = 0;
@@ -69,6 +92,7 @@ controll.controller('SearchCtrl', ['$scope', "$state", "$ionicLoading", function
 					console.log("tracks", tracks.collection[i].title);
 				}
 			}
+			$scope.$broadcast('scroll.infiniteScrollComplete');
 			$ionicLoading.hide();
 			checkPhase();
 		});
@@ -115,6 +139,9 @@ controll.controller('PlayerCtrl', ['$scope', '$stateParams', '$ionicPlatform', '
 		$scope.isPlaying = false;
 		checkPhase();
 	});
+	player.addEventListener("canplay", function() {
+		player.play();
+	});
 	player.addEventListener("timeupdate", function(e) {
 		seekPercent.style.width = (player.currentTime / player.duration * 100) + "%";
 	});
@@ -144,6 +171,11 @@ controll.controller('PlayerCtrl', ['$scope', '$stateParams', '$ionicPlatform', '
 		} else {
 			player.pause();
 		}
+	}
+
+	$scope.isLoved = false;
+	$scope.setLoving = function(song_id) {
+		$scope.isLoved = !$scope.isLoved;
 	}
 
 	function checkPhase() {

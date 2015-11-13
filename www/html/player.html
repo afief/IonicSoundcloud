@@ -1,31 +1,34 @@
 <ion-view view-title="Player" class="page-player">
-	<ion-content scroll="false">
+	<ion-content>
 
 		<audio id="playerElement"></audio>
 
 		<div class="card info">
-			<div class="item item-image" ng-if="song.artwork_url">
-    			<img ng-src="{{song.artwork_url}}">
-  			</div>
-  			<div class="item item-avatar">
+			<div class="item item-bg-image" ng-style="{'background-image': 'url(' + song.artwork_url + ')'}">				
+				<div class="controller">
+					<div class="buttons">
+						<div class="button backward" ng-click="doPlay()"> <i class="icon ion-ios-skipbackward"></i>
+						</div>
+						<div class="button play" ng-click="doPlay()"> <i class="icon ion-play" ng-class="{'ion-play': !isPlaying, 'ion-pause': isPlaying}"></i>
+						</div>
+						<div class="button forward" ng-click="doPlay()"> <i class="icon ion-ios-skipforward"></i>
+						</div>
+					</div>
+					<div class="seek-bar">
+						<div class="seek seek-bg"></div>
+						<div class="seek seek-grey" id="bufferPercent"></div>
+						<div class="seek seek-green" id="seekPercent"></div>
+					</div>
+				</div>
+			</div>
+			<div class="item item-avatar item-icon-right">
 				<img ng-src="{{song.user.avatar_url}}">
 				<h2>{{song.title}}</h2>
 				<p>{{song.user.username}}</p>
-  			</div>
+				<i class="icon ion-heart" ng-class="{'loved': isLoved}" ng-click="setLoving(song.id)"></i>
+			</div>
 		</div>
 
-		<div class="controller">
-			<div class="buttons">
-				<div class="button play" ng-click="doPlay()">
-					<i class="icon ion-play" ng-class="{'ion-play': !isPlaying, 'ion-pause': isPlaying}"></i>
-				</div>
-			</div>
-			<div class="seek-bar">
-				<div class="seek seek-bg"></div>
-				<div class="seek seek-grey" id="bufferPercent"></div>
-				<div class="seek seek-green" id="seekPercent"></div>
-			</div>
-		</div>
 
 	</ion-content>
 </ion-view>
