@@ -1,4 +1,4 @@
-<ion-view view-title="Search" class="page-profile page-search">
+<ion-view view-title="Search" class="page-search">
 	<ion-content>
 
 		<form ng-submit="doSearch()">
@@ -8,18 +8,17 @@
 			</div>
 		</form>
 
-		<div class="card" ng-repeat="res in searchResult" ng-click="openSong(res.id)">
-			<div class="avatar" ng-style="{'background-image': 'url(' + res.avatar + ')'}"></div>
+		<div class="list card" ng-repeat="res in searchResult" ng-style="{'background-image': 'url(' + (res.artwork_url || res.user.avatar_url) + ')'}" ng-click="openSong(res.id)">
 
-			<div class="item item-image">
-				<img ng-src="{{res.thumbnail}}">
-  			</div>
-
-  			<div class="item">
-    			{{res.judul}}
-  			</div>
+			<div class="item item-avatar item-icon-right">
+				<img ng-src="{{res.user.avatar_url}}">
+				<h2>{{res.title}}</h2>
+				<p>{{res.user.username}}</p>
+				<i class="icon icon-text">{{durationToTime(res.duration)}}</i>
+			</div>
 
 		</div>
 
+		<button class="button button-clear icon-left ion-refresh bt-loadmore" ng-if="canLoadMore()" ng-click="loadMore()">Load More</button>
 	</ion-content>
 </ion-view>

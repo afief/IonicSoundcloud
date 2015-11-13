@@ -16,39 +16,68 @@ controll.controller('AppCtrl', ['$scope', '$ionicModal', '$timeout', '$ionicLoad
 
 }]);
 
-controll.controller('SearchCtrl', ['$scope', "$state", function($scope, $state) {
+controll.controller('SearchCtrl', ['$scope', "$state", "$ionicLoading", function($scope, $state, $ionicLoading) {
+	var maxResult = 28;
+	var limit = 7;
+	var offset = 0;
+
 	$scope.searchResult = [];
 	$scope.search = {};
 
 	$scope.doSearch = function() {
 		console.log("search", $scope.search);
 
-		SC.get('/tracks', { q: $scope.search.text, limit: 5, linked_partitioning: 1}, function(tracks) {
-			console.log(tracks);
-			for (var i = 0; i < tracks.length; i++) {
-				if (tracks[i].streamable) {
-					$scope.searchResult.push({
-						from: "sc",
-						id: tracks[i].id,
-						url: tracks[i].stream_url + "?client_id=" + client_id,
-						judul: tracks[i].title,
-						duration: Math.floor(tracks[i].duration / 1000),
-						tanggal: tracks[i].created_at,
-						deskripsi: tracks[i].description,
-						thumbnail: tracks[i].artwork_url || tracks[i].user.avatar_url,
-						avatar: tracks[i].user.avatar_url,
-						meta: tracks[i]
-					});
+		$scope.searchResult = [];
+		offset = 0;
 
-					console.log("tracks", tracks[i]);
-				}
-			}
-			$scope.$apply();
-		});
+		loadSongs();
 	}
 
 	$scope.openSong = function(id) {
 		$state.go("app.play", {soundcloud_id: id});
+	}
+
+	$scope.loadMore = function() {
+		console.log("load more");
+		if (offset != -1) { 
+			loadSongs();
+		}
+	}
+	$scope.canLoadMore = function() {
+		return offset > 0;
+	}
+
+	$scope.durationToTime = function(dur) {
+		var ms = dur / 1000;
+		var m = Math.floor(ms / 60); m = (m < 10?"0":"") + m;
+		var s = Math.floor(ms % 60); s = (s < 10?"0":"") + s;
+		return m + ":" + s;
+	}
+
+	function loadSongs() {
+		$ionicLoading.show({template: "Searching"});
+		SC.get('/tracks', { q: $scope.search.text, offset: offset, limit: limit, linked_partitioning: 1}, function(tracks) {
+			console.log(tracks);
+			if ((tracks.collection.length <= 0) || ((offset + limit) > maxResult)) {
+				offset = -1;
+			} else {
+				offset += limit;
+			}
+			for (var i = 0; i < tracks.collection.length; i++) {
+				if (tracks.collection[i].streamable) {
+					$scope.searchResult.push(tracks.collection[i]);
+					console.log("tracks", tracks.collection[i].title);
+				}
+			}
+			$ionicLoading.hide();
+			checkPhase();
+		});
+	}
+
+	function checkPhase() {
+		if (!$scope.$$phase) {
+			$scope.$apply();
+		}
 	}
 }]);
 
@@ -57,16 +86,18 @@ controll.controller('PlayerCtrl', ['$scope', '$stateParams', '$ionicPlatform', '
 
 	var SC_ID = $stateParams.soundcloud_id;
 	var player = document.querySelector("#playerElement");
+	var seekPercent = document.querySelector("#seekPercent"); seekPercent.style.width = "0%";
+	var bufferPercent = document.querySelector("#bufferPercent"); bufferPercent.style.width = "0%";
 
 	$scope.song = false;
+	$ionicLoading.show({template: "Fetch Data"});
 	SC.get('/tracks/' + SC_ID, function(res) {
 		$scope.song = res;
-		console.log(res.stream_url + "?client_id=" + client_id);
+		console.log(res);
 		player.src = res.stream_url + "?client_id=" + client_id;
-	});
 
-	
-	//player.src = "http://192.168.88.14/audio/index.mp3";
+		$ionicLoading.hide();
+	});	
 
 	/*
 	Player Events
@@ -83,6 +114,24 @@ controll.controller('PlayerCtrl', ['$scope', '$stateParams', '$ionicPlatform', '
 	player.addEventListener("ended", function() {
 		$scope.isPlaying = false;
 		checkPhase();
+	});
+	player.addEventListener("timeupdate", function(e) {
+		seekPercent.style.width = (player.currentTime / player.duration * 100) + "%";
+	});
+	player.addEventListener('progress', function() {
+		var range = 0;
+		var bf = this.buffered;
+		var time = this.currentTime;
+		try {
+			while(!(bf.start(range) <= time && time <= bf.end(range))) {
+				range += 1;
+			}
+			var loadEndPercentage = bf.end(range) / this.duration;
+			bufferPercent.style.width = (loadEndPercentage * 100) + "%";
+		} catch(e) {
+			console.warn(e);
+		}
+
 	});
 	
 

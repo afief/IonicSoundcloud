@@ -116,13 +116,63 @@
 	}
 }
 
+.page-search {
+	.list.card {
+		background-size: cover;
+		background-position: center top;
+		background-repeat: no-repeat;
+		.item {
+			background-color: rgba(255,255,255,0.75);
+			.icon-text {
+				font-size: 1em;
+			}
+		}
+	}
+	.bt-loadmore {
+		margin: 10px auto;
+		display: table;
+	}
+}
+
 .page-player {
 	.controller {
-		.button {
-			
+		position: absolute;
+		bottom: 0px;
+		left: 0px;
+		width: 100%;
+		.buttons {
+			display: table;
+			margin: 10px auto;
+			.button {
+				border-radius: 50%;
+				width: 50px;
+				height: 50px;
+				padding: 3px;
+				background-color: transparent;
+				color: $energized;
+				border: solid 2px $energized;
+			}
 		}
-		.play {
-
+		.seek-bar {
+			position: relative;
+			width: 95%;
+			margin: 30px auto;
+			height: 10px;
+			.seek {
+				width: 100%;
+				height: 10px;
+				position: absolute;
+				top: 0px;
+				left: 0px;
+				background-color: $dark2;
+				border-radius: 10px;
+				&-green {
+					background-color: $energized;
+				}
+				&-grey {
+					background-color: $dark;
+				}
+			}
 		}
 	}
 }

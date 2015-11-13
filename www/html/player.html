@@ -1,12 +1,29 @@
 <ion-view view-title="Player" class="page-player">
-	<ion-content>
+	<ion-content scroll="false">
 
 		<audio id="playerElement"></audio>
 
+		<div class="card info">
+			<div class="item item-image" ng-if="song.artwork_url">
+    			<img ng-src="{{song.artwork_url}}">
+  			</div>
+  			<div class="item item-avatar">
+				<img ng-src="{{song.user.avatar_url}}">
+				<h2>{{song.title}}</h2>
+				<p>{{song.user.username}}</p>
+  			</div>
+		</div>
+
 		<div class="controller">
-			<img src="{{song.waveform_url}}" alt="">
-			<div class="button play" ng-click="doPlay()">
-				<i class="icon ion-play" ng-class="{'ion-play': !isPlaying, 'ion-pause': isPlaying}"></i>
+			<div class="buttons">
+				<div class="button play" ng-click="doPlay()">
+					<i class="icon ion-play" ng-class="{'ion-play': !isPlaying, 'ion-pause': isPlaying}"></i>
+				</div>
+			</div>
+			<div class="seek-bar">
+				<div class="seek seek-bg"></div>
+				<div class="seek seek-grey" id="bufferPercent"></div>
+				<div class="seek seek-green" id="seekPercent"></div>
 			</div>
 		</div>
 
