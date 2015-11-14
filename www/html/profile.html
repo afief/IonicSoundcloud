@@ -1,41 +1,60 @@
 <ion-view view-title="Profile" class="page-profile">
 
-	<div class="bg-profile" style="background-image: url('img/bg-profile.jpg');"></div>
+	<!-- <div class="bg-profile" style="background-image: url('img/bg-profile.jpg');"></div> -->
 
 	<ion-content>
 
-		<ion-slide-box class="user-wrapper">
+		<ion-slide-box class="user-wrapper" ng-if="user.isLogin">
 			<ion-slide>
 				<div class="user-profile">
-					<div class="avatar" style="background-image: url('img/profile.jpg');"></div>
-					<div class="name">Afief Yona Ramadhana</div>
+					<div class="avatar" ng-style="{'background-image': 'url(' + user.profile.avatar_url + ')'}"></div>
+					<div class="name">{{user.profile.username}}</div>
 					<div class="row">
-						<div class="col col-50 left"> <b>150</b>
-							Posts
+						<div class="col col-50 left"> <b>{{user.profile.followers_count}}</b>
+							Followers
 						</div>
-						<div class="col col-50 right"> <b>75</b>
-							Favorites
+						<div class="col col-50 right"> <b>{{user.profile.followings_count}}</b>
+							Followings
 						</div>
 					</div>
 				</div>
 			</ion-slide>
 			<ion-slide>
+
 				<div class="user-bio">
-					Sebagai alumni ESQ yang sudah 5 tahun bergelut dengan dunia nyata. Saya Siap! <br>
-					Sebagai alumni ESQ yang sudah 5 tahun bergelut dengan dunia nyata. Saya Siap!
+				<div class="row">
+						<div class="col col-50 left"> <b>{{user.profile.track_count + user.profile.private_tracks_count}}</b>
+							Tracks
+						</div>
+						<div class="col col-50 right"> <b>{{user.profile.public_favorites_count}}</b>
+							Favorites
+						</div>
+					</div>
+					{{user.profile.description}}
+					<div>
+						{{user.profile.city}} {{user.profile.country}}
+					</div>
+					<div>
+						{{user.profile.website}}
+					</div>
 				</div>
+				
 			</ion-slide>
 		</ion-slide-box>
+		<div class="login-wrapper" ng-if="!user.isLogin">
+			<div class="button button-positive" ng-click="user.login()">Login</div>
+		</div>
 
-		<div class="card" ng-repeat="num in [1,2,3,4,5,6]">
-			<div class="avatar" style="background-image: url('img/profile.jpg');"></div>
+		<div class="card" ng-repeat="track in tracks" ng-click="openSong(track.id)">
 
 			<div class="item item-image">
-				<img src="img/bg-profile.jpg">
+				<img ng-src="{{track.artwork_url}}">
   			</div>
 
-  			<div class="item">
-    			Alumni ESQ harus siap segalanya.
+  			<div class="item item-avatar">
+  				<img ng-src="{{track.user.avatar_url}}">
+  				<h2>{{track.title}}</h2>
+  				<p>{{track.user.username}}</p>
   			</div>
 
 		</div>

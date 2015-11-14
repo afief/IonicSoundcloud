@@ -1,7 +1,20 @@
 <ion-view view-title="Settings">
 	<ion-content>
 
-		<ion-refresher pulling-text="Pull to refresh ..." on-refresh="doRefresh()"></ion-refresher>
+		<ul class="list card">
+			<li class="item item-divider">
+				Player Settings
+			</li>
+			<li class="item item-toggle">
+				Autoplay
+				<label class="toggle toggle-assertive">
+					<input type="checkbox" ng-model="settings.autoplay">
+					<div class="track">
+						<div class="handle"></div>
+					</div>
+				</label>
+			</li>
+		</ul>
 
 	</ion-content>
 </ion-view>

@@ -9159,25 +9159,22 @@ a.button {
 
 .page-profile .card {
   position: relative;
-  border-top: solid 2px #fff; }
-  .page-profile .card .avatar {
+  min-height: 73px; }
+  .page-profile .card .item-avatar {
     position: absolute;
-    width: 75px;
-    height: 75px;
-    z-index: 100;
-    border-radius: 50%;
-    background-size: cover;
-    left: 10px;
-    top: 10px;
-    border: solid 2px #fff; }
+    width: 100%;
+    bottom: 0px;
+    background-color: #fff; }
 
 .page-search .list.card {
-  background-size: cover;
-  background-position: center top;
-  background-repeat: no-repeat; }
-  .page-search .list.card .item {
-    background-color: rgba(255, 255, 255, 0.75); }
-    .page-search .list.card .item .icon-text {
+  position: relative;
+  min-height: 73px; }
+  .page-search .list.card .item-avatar {
+    position: absolute;
+    width: 100%;
+    bottom: 0px;
+    background-color: #fff; }
+    .page-search .list.card .item-avatar .icon-text {
       font-size: 1em; }
 
 .page-player .item-bg-image {
@@ -9229,4 +9226,4 @@ a.button {
 .page-player .ion-heart {
   color: #4E342E; }
   .page-player .ion-heart.loved {
-    color: #2196F3; }
+    color: #FBFF00; }

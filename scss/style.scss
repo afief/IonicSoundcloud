@@ -115,32 +115,31 @@
 	}
 	.card {
 		position: relative;
-		border-top: solid 2px $light;
-		.avatar {
+		min-height: 73px;
+		.item-avatar {
 			position: absolute;
-			width: 75px;
-			height: 75px;
-			z-index: 100;
-			border-radius: 50%;
-			background-size: cover;
-			left: 10px;
-			top: 10px;
-			border: solid 2px $light;
+			width: 100%;
+			bottom: 0px;
+			background-color: $light;
 		}
 	}
 }
 
 .page-search {
 	.list.card {
-		background-size: cover;
-		background-position: center top;
-		background-repeat: no-repeat;
-		.item {
-			background-color: rgba(255,255,255,0.75);
+		position: relative;
+		min-height: 73px;
+
+		.item-avatar {
+			position: absolute;
+			width: 100%;
+			bottom: 0px;
+			background-color: $light;
 			.icon-text {
 				font-size: 1em;
 			}
 		}
+		
 	}
 }
 
@@ -202,7 +201,7 @@
 	.ion-heart {
 		color: $dark;
 		&.loved {
-			color: $positive;
+			color: $energized;
 		}
 	}
 }

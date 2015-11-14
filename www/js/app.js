@@ -35,16 +35,26 @@ angular.module('starter', ['ionic', 'starter.controllers', 'UserModule'])
 		url: '/home',
 		views: {
 			content: {
-				templateUrl: 'html/home.html'
+				templateUrl: 'html/home.html',
+				controller: 'HomeCtrl'
 			}
 		}
 	})
 	.state('app.search', {
-		url: '/search',
+		url: '/search/:search_text',
 		views: {
 			content: {
 				templateUrl: 'html/search.html',
 				controller: 'SearchCtrl'
+			}
+		}
+	})
+	.state('app.favorites', {
+		url: '/favorites',
+		views: {
+			content: {
+				templateUrl: 'html/favorites.html',
+				controller: 'FavoritesCtrl'
 			}
 		}
 	})
@@ -61,7 +71,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'UserModule'])
 		url: '/profile',
 		views: {
 			content: {
-				templateUrl: 'html/profile.html'
+				templateUrl: 'html/profile.html',
+				controller: 'ProfileCtrl'
 			}
 		}
 	})
@@ -77,7 +88,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'UserModule'])
 		url: '/settings',
 		views: {
 			content: {
-				templateUrl: 'html/settings.html'
+				templateUrl: 'html/settings.html',
+				controller: 'SettingsCtrl'
 			}
 		}
 	})
