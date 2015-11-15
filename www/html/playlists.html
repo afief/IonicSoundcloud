@@ -1,0 +1,21 @@
+<ion-view view-title="Playlist" class="page-playlist">
+	<ion-content>
+
+		<div class="list card playlist-card" ng-repeat="list in playlists">
+
+			<div class="item item-icon-left" ng-click="openPlaylist(res.id)">
+				<div class="icon icon-text num-track">{{list.track_count}}</div>
+				<h2>{{list.title}}</h2>
+				<p>{{durationToTime(list.duration)}}</p>
+			</div>
+			<div class="item item-track item-avatar" ng-repeat="track in list.tracks" ng-click="openSong(track.id)">
+				<img ng-src="{{track.user.avatar_url || track.artwork_url}}">
+				<h2>{{track.title}}</h2>
+				<p>{{durationToTime(track.duration)}} - {{track.user.username}}</p>
+			</div>
+
+		</div>
+
+		<ion-infinite-scroll ng-if="canLoadMore()" icon="ion-loading-c" on-infinite="loadMore()" immediate-check="false"></ion-infinite-scroll>
+	</ion-content>
+</ion-view>

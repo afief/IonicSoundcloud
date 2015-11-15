@@ -8,10 +8,11 @@ controll.controller('PlayerCtrl', ['$scope', '$stateParams', '$ionicPlatform', '
 
 	$scope.song = false;
 	$ionicLoading.show({template: "Fetch Data"});
-	SC.get('/tracks/' + SC_ID, function(res) {
+	SC.get('/tracks/' + SC_ID).then(function(res) {
 		$scope.song = res;
 		console.log(res);
 		player.src = res.stream_url + "?client_id=" + client_id;
+		$scope.isLoved = res.user_favorite;
 
 		$ionicLoading.hide();
 	});	
@@ -67,9 +68,15 @@ controll.controller('PlayerCtrl', ['$scope', '$stateParams', '$ionicPlatform', '
 		}
 	}
 
-	$scope.isLoved = false;
 	$scope.setLoving = function(song_id) {
 		$scope.isLoved = !$scope.isLoved;
+		if (user.isLogin) {
+
+			if ($scope.isLoved)
+				SC.put("/me/favorites/" + SC_ID).then(function() { console.log("put favorite", SC_ID)});
+			else
+				SC.delete("/me/favorites/" + SC_ID).then(function() { console.log("delete favorite", SC_ID)});
+		}
 	}
 
 	function checkPhase() {

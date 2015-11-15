@@ -28,7 +28,7 @@ controll.controller('SearchCtrl', ['$scope', "$state", "$stateParams", "$ionicLo
 
 	function loadSongs() {
 		$ionicLoading.show({template: "Searching"});
-		SC.get('/tracks', { q: $scope.search.text, offset: offset, limit: limit, linked_partitioning: 1}, function(tracks) {
+		SC.get('/tracks', { q: $scope.search.text, offset: offset, limit: limit, linked_partitioning: 1}).then(function(tracks) {
 			console.log(tracks);
 			if ((tracks.collection.length <= 0) || ((offset + limit) > maxResult)) {
 				offset = -1;
@@ -38,7 +38,6 @@ controll.controller('SearchCtrl', ['$scope', "$state", "$stateParams", "$ionicLo
 			for (var i = 0; i < tracks.collection.length; i++) {
 				if (tracks.collection[i].streamable) {
 					$scope.searchResult.push(tracks.collection[i]);
-					console.log("tracks", tracks.collection[i].title);
 				}
 			}
 			$scope.$broadcast('scroll.infiniteScrollComplete');

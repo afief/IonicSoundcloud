@@ -18,8 +18,49 @@
 						padding: 15px 0px;
 					}
 				}
+				&.active {
+					.icon {
+						color: $energized;
+					}
+				}
 			}
 		}
+	}
+}
+
+.song-card {
+	position: relative;
+	min-height: 73px;
+	border-top: solid 2px $light;
+	.item-avatar {
+		position: absolute;
+		width: 100%;
+		bottom: 0px;
+		background-color: rgba(255,255,255,0.9);
+		.icon-text {
+			font-size: 1em;
+		}
+	}
+}
+
+.playlist-card {
+	border-radius: 0px;
+	.num-track {
+		font-size: 1em;
+		border-radius: 50%;
+		background-color: #3E2723;
+		color: white;
+		width: 35px;
+		height: 35px;
+		text-align: center;
+		display: block;
+		padding: 7px 0px;
+		margin-top: 20px;
+	}
+	.item-track {
+		border-left: solid 10px $dark;
+		border-color: $dark;
+		border-radius: 0px !important;
 	}
 }
 
@@ -108,39 +149,16 @@
 			text-align: center;
 		}
 		.slider-pager {
+			bottom: 10px;
 			.slider-pager-page {
 				color: $light;
 			}
 		}
 	}
-	.card {
-		position: relative;
-		min-height: 73px;
-		.item-avatar {
-			position: absolute;
-			width: 100%;
-			bottom: 0px;
-			background-color: $light;
-		}
-	}
 }
 
 .page-search {
-	.list.card {
-		position: relative;
-		min-height: 73px;
-
-		.item-avatar {
-			position: absolute;
-			width: 100%;
-			bottom: 0px;
-			background-color: $light;
-			.icon-text {
-				font-size: 1em;
-			}
-		}
-		
-	}
+	
 }
 
 .page-player {
@@ -198,10 +216,25 @@
 			}
 		}
 	}
+
 	.ion-heart {
 		color: $dark;
 		&.loved {
 			color: $energized;
 		}
+	}
+}
+
+
+.login-wrapper {
+	padding: 20px;
+	.desc {
+		color: white;
+		margin-bottom: 20px;
+		text-align: center;
+	}
+	.button-image {
+		display: table;
+		margin: 20px auto;
 	}
 }

@@ -22,4 +22,11 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
+/* override default color of ionic elements */
+.card {
+	.item-divider {
+		background-color: $energized;
+	}
+}
+
 @import "style";

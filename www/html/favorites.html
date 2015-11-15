@@ -1,7 +1,18 @@
-<ion-view view-title="Favorites" class="page-search page-favorites">
+<ion-view view-title="Favorites" class="page-favorites">
 	<ion-content>
 
-		<div class="list card" ng-repeat="res in tracks" ng-click="openSong(res.id)">
+		<ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()"></ion-refresher>
+
+		<div class="login-wrapper" ng-if="!user.isLogin">
+			<div class="desc">
+				You're not logged in to Soundcloud.
+			</div>
+			<div class="button-image" ng-click="user.login()">
+				<img src="img/btn-connect-l.png" alt="">
+			</div>
+		</div>
+
+		<div class="list card song-card" ng-repeat="res in tracks" ng-click="openSong(res.id)" ng-if="user.isLogin">
 
 			<div class="item item-image">
 				<img ng-src="{{res.artwork_url}}">
@@ -13,6 +24,15 @@
 				<p>{{res.user.username}}</p> <i class="icon icon-text">{{durationToTime(res.duration)}}</i>
 			</div>
 
+		</div>
+
+		<div class="card" ng-if="(user.isLogin && !tracks.length && !isLoadingData)">
+			<div class="item item-divider">
+				No Track
+			</div>
+			<div class="item item-wrap-text">
+				You have no favorites songs.
+			</div>
 		</div>
 
 		<ion-infinite-scroll ng-if="canLoadMore()" icon="ion-loading-c" on-infinite="loadMore()" immediate-check="false"></ion-infinite-scroll>

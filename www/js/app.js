@@ -76,11 +76,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'UserModule'])
 			}
 		}
 	})
-	.state('app.message', {
-		url: '/message',
+	.state('app.playlists', {
+		url: '/playlists',
 		views: {
 			content: {
-				templateUrl: 'html/message.html'
+				templateUrl: 'html/playlists.html',
+				controller: 'PlaylistsCtrl'
 			}
 		}
 	})

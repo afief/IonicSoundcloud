@@ -2,7 +2,7 @@ var userModule = angular.module("UserModule", [], ["$httpProvider", function($ht
 	$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 }]);
 
-userModule.factory("user", ["$http","$q", "$rootScope", function($http, $q, $root) {
+userModule.factory("user", ["$http","$q", "$rootScope", '$sce', function($http, $q, $root, $sce) {
 	return {
 		profile: {},
 		saveData: function(key, data) {
@@ -26,9 +26,25 @@ userModule.factory("user", ["$http","$q", "$rootScope", function($http, $q, $roo
 		},
 		login: function() {
 			var that = this;
-			SC.connect(function(){
-				that.saveData("accessToken", SC.accessToken());
+			var loginURL = 'https://soundcloud.com/connect?client_id=' + client_id + '&redirect_uri=' + encodeURIComponent(redirect_uri) + '&response_type=code_and_token&scope=non-expiring&display=popup';
+			var winpop = window.open(loginURL, "_blank", "directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,resizable=no");
+			SC.connectCallback = function(url) {
+				url = url || winpop.location.href;
+
+				console.log("Callback", url);
+				var access_token = url.split("access_token=")[1].split("&")[0];
+				SC.initialize({oauth_token: that.loadData('accessToken')});
+				that.saveData("accessToken", access_token);
 				that.prepareUser();
+				$root.$emit("login", access_token);
+
+				winpop.close();
+			}
+			winpop.addEventListener("loadstart", function(e) {
+				console.log("LOADSTART : " +  e.url);
+				if (e && e.url && e.url.startsWith(redirect_uri)) {
+					SC.connectCallback(e.url);
+				}
 			});
 		},
 		logout: function() {
@@ -50,19 +66,17 @@ userModule.factory("user", ["$http","$q", "$rootScope", function($http, $q, $roo
 				}
 			}
 			function getProfile() {
-				if (!SC.accessToken())
-					SC.accessToken(that.loadData('accessToken'));
+				if (!SC.isConnected()) {
+					SC.initialize({oauth_token: that.loadData('accessToken')});
+				}
 
-				SC.get("/me", function(e,f){
-					console.log("Load Soundcloud Profile", e, f);
-					if (f) {
-						if (f.message && (f.message == "HTTP Error: 401"))
-							that.logout();
-						return;
-					}
+				SC.get("/me").then(function(e){
+					console.log("Load Soundcloud Profile", e);
+
 					that.profile = e;
 					that.saveData("profile", e);
-					that.saveData("accessToken", SC.accessToken());
+
+					$root.$emit("user-profile", e);
 
 					if (!$root.$$phase)
 						$root.$apply();
@@ -78,7 +92,6 @@ userModule.factory('settings', ['$rootScope', 'user', function($root, user){
 	return  {
 		get autoplay() { return autoplay },
 		set autoplay(val) {
-			console.log("set setting", val);
 			autoplay = val;
 			user.saveData("setting_autoplay", autoplay);
 		}
@@ -94,5 +107,7 @@ userModule.run(["user", "$rootScope", "$http", "settings", function(user, $root,
 	/* get settings */
 	settings.autoplay = (user.loadData("setting_autoplay") == 'true') ? true : false;
 	$root.settings = settings;
+
+	window.us = user;
 
 }]);

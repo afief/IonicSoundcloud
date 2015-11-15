@@ -1,5 +1,6 @@
 <ion-side-menus enable-menu-with-back-views="false">
     <ion-side-menu-content>
+
         <ion-nav-bar class="bar-stable">
             <ion-nav-back-button></ion-nav-back-button>
 
@@ -7,25 +8,26 @@
                 <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
             </ion-nav-buttons>
         </ion-nav-bar>
+
         <ion-nav-view name="content"></ion-nav-view>
     </ion-side-menu-content>
 
     <ion-side-menu side="left" expose-aside-when="large" width="80">
         <ion-content>
             <ion-list>
-                <ion-item menu-close href="#/app/home">
+                <ion-item menu-close href="#/app/home" ng-class="{active: (currentStateName() =='app.home')}">
                     <span class="icon ion-home"></span>
                 </ion-item>
-                <ion-item menu-close href="#/app/profile">
+                <ion-item menu-close href="#/app/profile" ng-class="{active: (currentStateName() =='app.profile')}">
                     <span class="icon ion-person"></span>
                 </ion-item>
-                <ion-item menu-close href="#/app/favorites">
+                <ion-item menu-close href="#/app/favorites" ng-class="{active: (currentStateName() =='app.favorites')}">
                     <span class="icon ion-heart"></span>
                 </ion-item>
-                <ion-item menu-close href="#/app/message">
-                    <span class="icon ion-email"></span>
+                <ion-item menu-close href="#/app/playlists" ng-class="{active: (currentStateName() =='app.playlists')}">
+                    <span class="icon ion-ios-albums"></span>
                 </ion-item>
-                <ion-item menu-close href="#/app/settings">
+                <ion-item menu-close href="#/app/settings" ng-class="{active: (currentStateName() =='app.settings')}">
                     <span class="icon ion-gear-a"></span>
                 </ion-item>
             </ion-list>

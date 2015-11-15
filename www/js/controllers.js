@@ -11,20 +11,22 @@ controll.run(['$rootScope', function($root){
 
 controll.controller('AppCtrl', ['$scope', '$state', '$timeout', '$ionicLoading', 'user', function($scope, $state, $timeout, $ionicLoading, user) {
 
-
-	$scope.doRefresh = function() {
-		/* Simulate Loading */
-		$ionicLoading.show({template: 'Fetch Data'});
-		$timeout(function() {
-			$ionicLoading.hide();
-			$scope.$broadcast('scroll.refreshComplete');
-		}, 2000);
-
-	}	
-
 	$scope.openSong = function(id) {
-		$state.go("app.play", {soundcloud_id: id});
+		$scope.changeState("app.play", {soundcloud_id: id});
 	}
+
+	$scope.openPlaylist = function(id) {
+		$scope.changeState("app.playlist", {playlist_id: id});
+	}
+
+	$scope.changeState = function(name, params) {
+		$state.go(name, params);
+	}
+
+	$scope.currentStateName = function() {
+		return $state.current.name;
+	}
+
 
 }]);
 

@@ -4,25 +4,22 @@
 
 	<ion-content>
 
+		<div class="login-wrapper" ng-if="!user.isLogin">
+			<div class="desc">
+				You're not logged in to Soundcloud.
+			</div>
+			<div class="button-image" ng-click="user.login()">
+				<img src="img/btn-connect-l.png" alt="">
+			</div>
+		</div>
+
 		<ion-slide-box class="user-wrapper" ng-if="user.isLogin">
 			<ion-slide>
 				<div class="user-profile">
 					<div class="avatar" ng-style="{'background-image': 'url(' + user.profile.avatar_url + ')'}"></div>
 					<div class="name">{{user.profile.username}}</div>
+					
 					<div class="row">
-						<div class="col col-50 left"> <b>{{user.profile.followers_count}}</b>
-							Followers
-						</div>
-						<div class="col col-50 right"> <b>{{user.profile.followings_count}}</b>
-							Followings
-						</div>
-					</div>
-				</div>
-			</ion-slide>
-			<ion-slide>
-
-				<div class="user-bio">
-				<div class="row">
 						<div class="col col-50 left"> <b>{{user.profile.track_count + user.profile.private_tracks_count}}</b>
 							Tracks
 						</div>
@@ -30,6 +27,10 @@
 							Favorites
 						</div>
 					</div>
+				</div>
+			</ion-slide>
+			<ion-slide>
+				<div class="user-bio">
 					{{user.profile.description}}
 					<div>
 						{{user.profile.city}} {{user.profile.country}}
@@ -37,24 +38,31 @@
 					<div>
 						{{user.profile.website}}
 					</div>
+					<div class="row">
+						<div class="col col-50 left"> <b>{{user.profile.followers_count}}</b>
+							Followers
+						</div>
+						<div class="col col-50 right"> <b>{{user.profile.followings_count}}</b>
+							Followings
+						</div>
+
+					</div>
 				</div>
 				
 			</ion-slide>
 		</ion-slide-box>
-		<div class="login-wrapper" ng-if="!user.isLogin">
-			<div class="button button-positive" ng-click="user.login()">Login</div>
-		</div>
 
-		<div class="card" ng-repeat="track in tracks" ng-click="openSong(track.id)">
+		<div class="card song-card" ng-repeat="track in tracks" ng-click="openSong(track.id)" ng-if="user.isLogin">
 
 			<div class="item item-image">
 				<img ng-src="{{track.artwork_url}}">
   			</div>
 
-  			<div class="item item-avatar">
+  			<div class="item item-avatar item-icon-right">
   				<img ng-src="{{track.user.avatar_url}}">
   				<h2>{{track.title}}</h2>
   				<p>{{track.user.username}}</p>
+  				<i class="icon icon-text">{{durationToTime(track.duration)}}</i>
   			</div>
 
 		</div>

@@ -9079,6 +9079,10 @@ a.button {
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
 
+/* override default color of ionic elements */
+.card .item-divider {
+  background-color: #FBFF00; }
+
 .menu {
   background-color: #4E342E; }
   .menu .scroll-content .list .item {
@@ -9094,6 +9098,38 @@ a.button {
         background-color: #4E342E;
         text-align: center;
         padding: 15px 0px; }
+    .menu .scroll-content .list .item.active .icon {
+      color: #FBFF00; }
+
+.song-card {
+  position: relative;
+  min-height: 73px;
+  border-top: solid 2px #fff; }
+  .song-card .item-avatar {
+    position: absolute;
+    width: 100%;
+    bottom: 0px;
+    background-color: rgba(255, 255, 255, 0.9); }
+    .song-card .item-avatar .icon-text {
+      font-size: 1em; }
+
+.playlist-card {
+  border-radius: 0px; }
+  .playlist-card .num-track {
+    font-size: 1em;
+    border-radius: 50%;
+    background-color: #3E2723;
+    color: white;
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    display: block;
+    padding: 7px 0px;
+    margin-top: 20px; }
+  .playlist-card .item-track {
+    border-left: solid 10px #4E342E;
+    border-color: #4E342E;
+    border-radius: 0px !important; }
 
 .pane {
   background-color: #3E2723; }
@@ -9154,28 +9190,10 @@ a.button {
   font-size: 1.1em;
   text-align: center; }
 
-.page-profile .user-wrapper .slider-pager .slider-pager-page {
-  color: #fff; }
-
-.page-profile .card {
-  position: relative;
-  min-height: 73px; }
-  .page-profile .card .item-avatar {
-    position: absolute;
-    width: 100%;
-    bottom: 0px;
-    background-color: #fff; }
-
-.page-search .list.card {
-  position: relative;
-  min-height: 73px; }
-  .page-search .list.card .item-avatar {
-    position: absolute;
-    width: 100%;
-    bottom: 0px;
-    background-color: #fff; }
-    .page-search .list.card .item-avatar .icon-text {
-      font-size: 1em; }
+.page-profile .user-wrapper .slider-pager {
+  bottom: 10px; }
+  .page-profile .user-wrapper .slider-pager .slider-pager-page {
+    color: #fff; }
 
 .page-player .item-bg-image {
   padding: 0px;
@@ -9227,3 +9245,13 @@ a.button {
   color: #4E342E; }
   .page-player .ion-heart.loved {
     color: #FBFF00; }
+
+.login-wrapper {
+  padding: 20px; }
+  .login-wrapper .desc {
+    color: white;
+    margin-bottom: 20px;
+    text-align: center; }
+  .login-wrapper .button-image {
+    display: table;
+    margin: 20px auto; }
