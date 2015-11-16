@@ -7,6 +7,10 @@ controll.run(['$rootScope', function($root){
 		var s = Math.floor(ms % 60); s = (s < 10?"0":"") + s;
 		return m + ":" + s;
 	}
+	$root.$on('$ionicView.beforeEnter', function(e, data) {
+		console.log("history", data);
+        $root.isBackButtonShown = data.enableBack;
+    });
 }]);
 
 controll.controller('AppCtrl', ['$scope', '$state', '$timeout', '$ionicLoading', 'user', function($scope, $state, $timeout, $ionicLoading, user) {

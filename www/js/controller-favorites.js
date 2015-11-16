@@ -29,6 +29,9 @@ controll.controller("FavoritesCtrl", ["$scope", "$rootScope", "$ionicLoading", "
 		*/
 		$scope.isLoadingData = true;
 		SC.get("/me/favorites", { offset: 0, limit: limit, linked_partitioning: 1}).then(function(tracks) {
+			$scope.$broadcast('scroll.refreshComplete');
+			$scope.isLoadingData = false;
+
 			if (tracks && !tracks.errors && (tracks.collection.length > 0)) {
 
 				$scope.tracks = [];
@@ -40,9 +43,6 @@ controll.controller("FavoritesCtrl", ["$scope", "$rootScope", "$ionicLoading", "
 					}
 				}
 			}
-
-			$scope.$broadcast('scroll.refreshComplete');
-			$scope.isLoadingData = false;
 		}, function() {
 			$scope.$broadcast('scroll.refreshComplete');
 			$scope.isLoadingData = false;
@@ -54,7 +54,11 @@ controll.controller("FavoritesCtrl", ["$scope", "$rootScope", "$ionicLoading", "
 
 		$ionicLoading.show({template: "Fetch Data"});
 		$scope.isLoadingData = true;
+
 		SC.get("/me/favorites", { offset: offset, limit: limit, linked_partitioning: 1}).then(function(tracks) {
+			$scope.$broadcast("scroll.infiniteScrollComplete");
+			$ionicLoading.hide();
+			$scope.isLoadingData = false;
 
 			if (tracks && !tracks.errors) {
 				if ((tracks.collection.length <= 0) || ((offset + limit) > maxResult)) {
@@ -68,10 +72,6 @@ controll.controller("FavoritesCtrl", ["$scope", "$rootScope", "$ionicLoading", "
 					}
 				}
 			}
-
-			$scope.$broadcast("scroll.infiniteScrollComplete");
-			$ionicLoading.hide();
-			$scope.isLoadingData = false;
 
 			checkPhase();
 		}, function(err) {

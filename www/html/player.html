@@ -3,7 +3,7 @@
 
 		<audio id="playerElement"></audio>
 
-		<div class="card info">
+		<div class="card info" ng-show="song">
 			<div class="item item-bg-image" ng-style="{'background-image': 'url(' + song.artwork_url + ')'}">				
 				<div class="controller">
 					<div class="buttons">
@@ -26,6 +26,13 @@
 				<h2>{{song.title}}</h2>
 				<p>{{song.user.username}}</p>
 				<i class="icon ion-heart" ng-class="{'loved': isLoved}" ng-click="setLoving(song.id)"></i>
+			</div>
+		</div>
+
+		<div class="list card" ng-if="song">
+			<div class="item item-icon-left" ng-click="addSelectPlaylist(song.id)">
+				<i class="icon ion-plus-circled"></i>
+				Add To Playlist
 			</div>
 		</div>
 

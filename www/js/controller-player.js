@@ -1,4 +1,4 @@
-controll.controller('PlayerCtrl', ['$scope', '$stateParams', '$ionicPlatform', '$ionicLoading', 'user', 'settings', function($scope, $stateParams, $ionicPlatform, $ionicLoading, user, settings) {
+controll.controller('PlayerCtrl', ['$scope', '$stateParams', '$ionicPlatform', '$ionicLoading', 'user', 'settings', '$ionicModal', function($scope, $stateParams, $ionicPlatform, $ionicLoading, user, settings, $ionicModal) {
 	console.log("Player Controller");
 
 	var SC_ID = $stateParams.soundcloud_id;
@@ -84,5 +84,23 @@ controll.controller('PlayerCtrl', ['$scope', '$stateParams', '$ionicPlatform', '
 			$scope.$apply();
 		}
 	}
+
+	/* Playlist */
+	$ionicModal.fromTemplateUrl('html/modal-playlist.html', {
+		scope: $scope,
+		animation: 'slide-in-up'
+	}).then(function(modal) {
+		$scope.modal = modal;
+	});
+	$scope.addSelectPlaylist = function(song_id) {
+		console.log("show");
+		$scope.modal.show();
+	}
+	$scope.$on('$destroy', function() {
+		$scope.modal.remove();
+	});
+	$scope.$on('$stateChangeStart', function(e){
+		$scope.modal.remove();
+	});
 
 }]);
