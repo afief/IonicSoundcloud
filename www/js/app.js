@@ -59,7 +59,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'UserModule'])
 		}
 	})
 	.state('app.play', {
-		url: '/play/:soundcloud_id',
+		url: '/play',
 		views: {
 			content: {
 				templateUrl: 'html/player.html',

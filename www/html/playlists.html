@@ -3,6 +3,15 @@
 
 		<ion-refresher pulling-text="Pull to refresh ..." on-refresh="doRefresh()"></ion-refresher>
 
+		<div class="login-wrapper" ng-if="!user.isLogin">
+			<div class="desc">
+				You're not logged in to Soundcloud.
+			</div>
+			<div class="button-image" ng-click="user.login()">
+				<img src="img/btn-connect-l.png" alt="">
+			</div>
+		</div>
+
 		<div class="list card playlist-card" ng-repeat="list in playlists" ng-if="user.isLogin">
 
 			<div class="item item-icon-left" ng-click="openPlaylist(res.id)">
@@ -10,7 +19,7 @@
 				<h2>{{list.title}}</h2>
 				<p>{{durationToTime(list.duration)}}</p>
 			</div>
-			<div class="item item-track item-avatar" ng-repeat="track in list.tracks" ng-click="openSong(track.id)">
+			<div class="item item-track item-avatar" ng-repeat="track in list.tracks" ng-click="openSong(track)">
 				<img ng-src="{{track.user.avatar_url || track.artwork_url}}">
 				<h2>{{track.title}}</h2>
 				<p>{{durationToTime(track.duration)}} - {{track.user.username}}</p>

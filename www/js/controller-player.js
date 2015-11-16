@@ -1,67 +1,73 @@
-controll.controller('PlayerCtrl', ['$scope', '$stateParams', '$ionicPlatform', '$ionicLoading', 'user', 'settings', '$ionicModal', function($scope, $stateParams, $ionicPlatform, $ionicLoading, user, settings, $ionicModal) {
+controll.controller('PlayerCtrl', ['$scope', '$stateParams', '$ionicPlatform', '$ionicLoading', 'user', 'settings', '$ionicModal', '$ionicHistory', 'player', function($scope, $stateParams, $ionicPlatform, $ionicLoading, user, settings, $ionicModal, $ionicHistory, player) {
 	console.log("Player Controller");
 
-	var SC_ID = $stateParams.soundcloud_id;
-	var player = document.querySelector("#playerElement");
 	var seekPercent = document.querySelector("#seekPercent"); seekPercent.style.width = "0%";
 	var bufferPercent = document.querySelector("#bufferPercent"); bufferPercent.style.width = "0%";
 
-	$scope.song = false;
-	$ionicLoading.show({template: "Fetch Data"});
-	SC.get('/tracks/' + SC_ID).then(function(res) {
-		$scope.song = res;
-		console.log(res);
-		player.src = res.stream_url + "?client_id=" + client_id;
-		$scope.isLoved = res.user_favorite;
-
-		$ionicLoading.hide();
-	});	
+	$scope.track = false;
+	$scope.isPlaying = false;
 
 	/*
 	Player Events
 	*/
-	$scope.isPlaying = false;
-	player.addEventListener("playing", function() {
+	function onPlaying() {
 		$scope.isPlaying = true;
 		checkPhase();
-	});
-	player.addEventListener("pause", function() {
+	}
+	function onPause() {
 		$scope.isPlaying = false;
 		checkPhase();
-	});
-	player.addEventListener("ended", function() {
+	}
+	function onEnded() {
 		$scope.isPlaying = false;
 		checkPhase();
-	});
-	player.addEventListener("canplay", function() {
-		if (settings.autoplay)
-			player.play();
-	});
-	player.addEventListener("timeupdate", function(e) {
-		seekPercent.style.width = (player.currentTime / player.duration * 100) + "%";
-	});
-	player.addEventListener('progress', function() {
-		var range = 0;
-		var bf = this.buffered;
-		var time = this.currentTime;
-		try {
-			while(!(bf.start(range) <= time && time <= bf.end(range))) {
-				range += 1;
-			}
-			var loadEndPercentage = bf.end(range) / this.duration;
-			bufferPercent.style.width = (loadEndPercentage * 100) + "%";
-		} catch(e) {
-			console.warn(e);
+	}
+
+	function onTimeupdate(e) {
+		seekPercent.style.width = e + "%";
+	}
+	function onProgress(e) {
+		bufferPercent.style.width = e + "%";
+	}
+
+
+	/* prepare player event listeners and seekbar */
+	$scope.$on("$ionicView.enter", function() {
+		/* back to previous state or home if there is no song data saved at current_play */
+		if (!player.track) {
+			if ($ionicHistory.backView())
+				$ionicHistory.goBack();
+			else
+				$scope.changeState("app.home", {}, true);
+			return;
 		}
 
-	});
-	
+		player.onPlaying	= onPlaying;
+		player.onPause		= onPause;
+		player.onEnded		= onEnded;
+		player.onTimeupdate	= onTimeupdate;
+		player.onProgress	= onProgress;
 
+
+
+		$scope.track = player.track;
+		$scope.isLoved = player.track.user_favorite;
+		$scope.isPlaying = player.playing;
+	});
+	$scope.$on("$ionicView.leave", function() {
+		player.onPlaying	= null;
+		player.onPause		= null;
+		player.onEnded		= null;
+		player.onTimeupdate	= null;
+		player.onProgress	= null;
+	});	
+	
 	/*
 	Controller Click
 	*/
 	$scope.doPlay = function() {
-		if (player.paused) {
+		console.log("isplay", player.playing);
+		if (!player.playing) {
 			player.play();
 		} else {
 			player.pause();
@@ -73,9 +79,9 @@ controll.controller('PlayerCtrl', ['$scope', '$stateParams', '$ionicPlatform', '
 		if (user.isLogin) {
 
 			if ($scope.isLoved)
-				SC.put("/me/favorites/" + SC_ID).then(function() { console.log("put favorite", SC_ID)});
+				SC.put("/me/favorites/" + $scope.track.id).then(function() { console.log("put favorite", $scope.track.id)});
 			else
-				SC.delete("/me/favorites/" + SC_ID).then(function() { console.log("delete favorite", SC_ID)});
+				SC.delete("/me/favorites/" + $scope.track.id).then(function() { console.log("delete favorite", $scope.track.id)});
 		}
 	}
 
@@ -84,6 +90,7 @@ controll.controller('PlayerCtrl', ['$scope', '$stateParams', '$ionicPlatform', '
 			$scope.$apply();
 		}
 	}
+
 
 	/* Playlist */
 	$ionicModal.fromTemplateUrl('html/modal-playlist.html', {

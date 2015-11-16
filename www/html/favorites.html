@@ -12,7 +12,7 @@
 			</div>
 		</div>
 
-		<div class="list card song-card" ng-repeat="res in tracks" ng-click="openSong(res.id)" ng-if="user.isLogin">
+		<div class="list card song-card" ng-repeat="res in tracks" ng-click="openSong(res)" ng-if="user.isLogin">
 
 			<div class="item item-image">
 				<img ng-src="{{res.artwork_url}}">

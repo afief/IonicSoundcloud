@@ -52,7 +52,7 @@
 			</ion-slide>
 		</ion-slide-box>
 
-		<div class="card song-card" ng-repeat="track in tracks" ng-click="openSong(track.id)" ng-if="user.isLogin">
+		<div class="card song-card" ng-repeat="track in tracks" ng-click="openSong(track)" ng-if="user.isLogin">
 
 			<div class="item item-image">
 				<img ng-src="{{track.artwork_url}}">

@@ -16,8 +16,18 @@ userModule.factory("user", ["$http","$q", "$rootScope", '$sce', function($http, 
 			return true;
 		},
 		loadData: function(key) {
-			if (window.localStorage)
-				return window.localStorage[key];
+			if (window.localStorage) {
+				var str = window.localStorage[key];
+				if (str) {
+					try {
+						var data = JSON.parse(str);
+						return data;
+					} catch(e) {
+						return str;
+					}
+				}
+				return str;
+			}
 			return false;
 		},
 
@@ -56,9 +66,9 @@ userModule.factory("user", ["$http","$q", "$rootScope", '$sce', function($http, 
 		prepareUser: function() {
 			var that = this;
 			if (this.isLogin) {
-				var profileText = this.loadData('profile');
-				if (profileText) {
-					this.profile = JSON.parse(profileText);
+				var profile = this.loadData('profile');
+				if (profile) {
+					this.profile = profile;
 					console.log("profile", this.profile);
 					getProfile();
 				} else {

@@ -1,10 +1,8 @@
 <ion-view view-title="Player" class="page-player">
 	<ion-content>
 
-		<audio id="playerElement"></audio>
-
-		<div class="card info" ng-show="song">
-			<div class="item item-bg-image" ng-style="{'background-image': 'url(' + song.artwork_url + ')'}">				
+		<div class="card info" ng-show="track">
+			<div class="item item-bg-image" ng-style="{'background-image': 'url(' + track.artwork_url + ')'}">				
 				<div class="controller">
 					<div class="buttons">
 						<div class="button backward" ng-click="doPlay()"> <i class="icon ion-ios-skipbackward"></i>
@@ -22,15 +20,15 @@
 				</div>
 			</div>
 			<div class="item item-avatar item-icon-right">
-				<img ng-src="{{song.user.avatar_url}}">
-				<h2>{{song.title}}</h2>
-				<p>{{song.user.username}}</p>
-				<i class="icon ion-heart" ng-class="{'loved': isLoved}" ng-click="setLoving(song.id)"></i>
+				<img ng-src="{{track.user.avatar_url}}">
+				<h2>{{track.title}}</h2>
+				<p>{{track.user.username}}</p>
+				<i class="icon ion-heart" ng-class="{'loved': isLoved}" ng-click="setLoving(track.id)"></i>
 			</div>
 		</div>
 
-		<div class="list card" ng-if="song">
-			<div class="item item-icon-left" ng-click="addSelectPlaylist(song.id)">
+		<div class="list card" ng-if="track">
+			<div class="item item-icon-left" ng-click="addSelectPlaylist(track.id)">
 				<i class="icon ion-plus-circled"></i>
 				Add To Playlist
 			</div>

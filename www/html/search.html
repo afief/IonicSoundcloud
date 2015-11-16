@@ -8,7 +8,7 @@
 			</div>
 		</form>
 
-		<div class="list card song-card" ng-repeat="res in searchResult" ng-click="openSong(res.id)">
+		<div class="list card song-card" ng-repeat="res in searchResult" ng-click="openSong(res)">
 
 			<div class="item item-image">
 				<img ng-src="{{res.artwork_url}}">
