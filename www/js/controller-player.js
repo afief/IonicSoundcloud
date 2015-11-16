@@ -1,8 +1,9 @@
 controll.controller('PlayerCtrl', ['$scope', '$stateParams', '$ionicPlatform', '$ionicLoading', 'user', 'settings', '$ionicModal', '$ionicHistory', 'player', function($scope, $stateParams, $ionicPlatform, $ionicLoading, user, settings, $ionicModal, $ionicHistory, player) {
 	console.log("Player Controller");
 
-	var seekPercent = document.querySelector("#seekPercent"); seekPercent.style.width = "0%";
+	var seekPercent = document.querySelector("#seekPercent"); seekPercent.value = 0;
 	var bufferPercent = document.querySelector("#bufferPercent"); bufferPercent.style.width = "0%";
+	var isSeekDown = false;
 
 	$scope.track = false;
 	$scope.isPlaying = false;
@@ -24,14 +25,26 @@ controll.controller('PlayerCtrl', ['$scope', '$stateParams', '$ionicPlatform', '
 	}
 
 	function onTimeupdate(e) {
-		seekPercent.style.width = e + "%";
+		if (!isSeekDown)
+			seekPercent.value = e;
 	}
 	function onProgress(e) {
 		bufferPercent.style.width = e + "%";
 	}
 
+	function onSeekChanged() {
+		player.playingProgress = seekPercent.value;
+		isSeekDown = false;
+	}
+	function onSeekStart() {
+		isSeekDown = true;
+	}
 
 	/* prepare player event listeners and seekbar */
+	seekPercent.addEventListener("change", onSeekChanged);
+	seekPercent.addEventListener("mousedown", onSeekStart);
+	seekPercent.addEventListener("touchstart", onSeekStart);
+
 	$scope.$on("$ionicView.enter", function() {
 		/* back to previous state or home if there is no song data saved at current_play */
 		if (!player.track) {
@@ -48,7 +61,8 @@ controll.controller('PlayerCtrl', ['$scope', '$stateParams', '$ionicPlatform', '
 		player.onTimeupdate	= onTimeupdate;
 		player.onProgress	= onProgress;
 
-
+		seekPercent.style.width = player.playingProgress + "%";
+		bufferPercent.style.width = player.downloadProgress + "%";
 
 		$scope.track = player.track;
 		$scope.isLoved = player.track.user_favorite;

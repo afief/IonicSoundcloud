@@ -2,20 +2,25 @@
 	<ion-content>
 
 		<div class="card info" ng-show="track">
-			<div class="item item-bg-image" ng-style="{'background-image': 'url(' + track.artwork_url + ')'}">				
+			<div class="item item-bg-image" ng-style="{'background-image': 'url(' + track.artwork_url + ')'}">
 				<div class="controller">
 					<div class="buttons">
 						<div class="button backward" ng-click="doPlay()"> <i class="icon ion-ios-skipbackward"></i>
 						</div>
 						<div class="button play" ng-click="doPlay()"> <i class="icon ion-play" ng-class="{'ion-play': !isPlaying, 'ion-pause': isPlaying}"></i>
 						</div>
-						<div class="button forward" ng-click="doPlay()"> <i class="icon ion-ios-skipforward"></i>
+						<div class="button forward" ng-click="doPlay()">
+							<i class="icon ion-ios-skipforward"></i>
 						</div>
 					</div>
+
+					
 					<div class="seek-bar">
+						<div class="item range range-energized">
+							<input type="range" min="0" max="100" value="0" id="seekPercent">
+						</div>
 						<div class="seek seek-bg"></div>
 						<div class="seek seek-grey" id="bufferPercent"></div>
-						<div class="seek seek-green" id="seekPercent"></div>
 					</div>
 				</div>
 			</div>
@@ -33,7 +38,6 @@
 				Add To Playlist
 			</div>
 		</div>
-
 
 	</ion-content>
 </ion-view>

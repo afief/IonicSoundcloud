@@ -1,7 +1,7 @@
 var playerModule = angular.module("PlayerModule", []);
 
 playerModule.factory("player", function() {
-	console.info("Player Factory");
+	console.log("Player Factory");
 
 	var currentTrack = false;
 	var playerEl = document.createElement("audio");
@@ -90,6 +90,9 @@ playerModule.factory("player", function() {
 		get playingProgress() {
 			return playingProgress;
 		},
+		set playingProgress(percent) {
+			playerEl.currentTime = playerEl.duration / 100 * percent;
+		},
 		get playing() {
 			return !playerEl.paused;
 		},
@@ -128,9 +131,28 @@ playerModule.directive('playerDir', function() {
 
 		},
 		controller: ['$scope', '$state', 'player', function($scope, $state, player){
+			var seekPercent = document.querySelector("#playerSeekPercent"); seekPercent.style.width = "0%";
+			var bufferPercent = document.querySelector("#playerBufferPercent"); bufferPercent.style.width = "0%";
+
+			function onTimeupdate(e) {
+				seekPercent.style.width = e + "%";
+			}
+			function onProgress(e) {
+				bufferPercent.style.width = e + "%";
+			}
+
 			$scope.player = player;
 			$scope.canShowUp = function() {
-				return player.track && ($state.current.name != 'app.play');
+				var canShow = (player.track && ($state.current.name != 'app.play'));
+				if (canShow) {
+					console.log("can show");
+					player.onTimeupdate	= onTimeupdate;
+					player.onProgress	= onProgress;
+
+					seekPercent.style.width = player.playingProgress + "%";
+					bufferPercent.style.width = player.downloadProgress + "%";
+				}
+				return canShow;
 			}
 			$scope.doPlayPause = function() {
 				if (!player.playing) {
@@ -140,6 +162,9 @@ playerModule.directive('playerDir', function() {
 				}
 			}
 			$scope.openPlayerPage = function() {
+				player.onTimeupdate	= null;
+				player.onProgress	= null;
+
 				$state.go("app.play");
 			}
 		}]

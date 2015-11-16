@@ -1,11 +1,17 @@
 <div class="player-dir" ng-class="{show: canShowUp()}">
 
+	<div class="seek-bar">
+		<div class="seek seek-bg"></div>
+		<div class="seek seek-grey" id="playerBufferPercent"></div>
+		<div class="seek seek-green" id="playerSeekPercent"></div>
+	</div>
+
 	<div class="card">
 		<div class="item item-icon-left item-icon-right">
-			<div class="icon ion-play" ng-class="{'ion-play': !player.playing, 'ion-pause': player.playing}" ng-click="doPlayPause()"></div>
+			<div class="icon icon-left ion-play" ng-class="{'ion-play': !player.playing, 'ion-pause': player.playing}" ng-click="doPlayPause()"></div>
 			<h2>{{player.track.title}}</h2>
 			<p>{{player.track.user.username}}</p>
-			<div class="icon ion-chevron-up" ng-click="openPlayerPage()"></div>
+			<div class="icon icon-right ion-chevron-up" ng-click="openPlayerPage()"></div>
 		</div>
 	</div>
 	
