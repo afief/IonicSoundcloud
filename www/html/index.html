@@ -1,8 +1,6 @@
 <ion-side-menus enable-menu-with-back-views="true">
     <ion-side-menu-content>
 
-        <audio id="playerElement"></audio>
-
         <ion-nav-bar class="bar-stable">
             <ion-nav-back-button></ion-nav-back-button>
 
@@ -10,6 +8,8 @@
                 <button class="button button-icon button-clear ion-navicon" menu-toggle="left" ng-hide="isBackButtonShown"></button>
             </ion-nav-buttons>
         </ion-nav-bar>
+
+        <player-dir></player-dir>
 
         <ion-nav-view name="content"></ion-nav-view>
 

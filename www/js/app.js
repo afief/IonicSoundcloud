@@ -1,4 +1,4 @@
-angular.module('starter', ['ionic', 'starter.controllers', 'UserModule'])
+angular.module('starter', ['ionic', 'starter.controllers', 'PlayerModule', 'UserModule'])
 
 .run(function($ionicPlatform) {
 

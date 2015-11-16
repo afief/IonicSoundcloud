@@ -1,0 +1,12 @@
+<div class="player-dir" ng-class="{show: canShowUp()}">
+
+	<div class="card">
+		<div class="item item-icon-left item-icon-right">
+			<div class="icon ion-play" ng-class="{'ion-play': !player.playing, 'ion-pause': player.playing}" ng-click="doPlayPause()"></div>
+			<h2>{{player.track.title}}</h2>
+			<p>{{player.track.user.username}}</p>
+			<div class="icon ion-chevron-up" ng-click="openPlayerPage()"></div>
+		</div>
+	</div>
+	
+</div>
