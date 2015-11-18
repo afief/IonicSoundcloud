@@ -31,12 +31,18 @@
 .song-card {
 	position: relative;
 	min-height: 73px;
-	border-top: solid 2px $light;
+	border-top: solid 2px $energized;
 	.item-avatar {
 		position: absolute;
 		width: 100%;
 		bottom: 0px;
-		background-color: rgba(255,255,255,0.9);
+		background-color: $energized;
+		h2 {
+			font-weight: 500;
+		}
+		p {
+			color: $dark2;
+		}
 		.icon-text {
 			font-size: 1em;
 		}
@@ -322,5 +328,14 @@
 				font-size: 0.8em;
 			}	
 		}
+	}
+}
+
+.popover {
+	height: inherit;
+	ion-content {
+		position: relative;
+		display: table;
+		width: 100%;
 	}
 }

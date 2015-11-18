@@ -9104,12 +9104,16 @@ a.button {
 .song-card {
   position: relative;
   min-height: 73px;
-  border-top: solid 2px #fff; }
+  border-top: solid 2px #FBFF00; }
   .song-card .item-avatar {
     position: absolute;
     width: 100%;
     bottom: 0px;
-    background-color: rgba(255, 255, 255, 0.9); }
+    background-color: #FBFF00; }
+    .song-card .item-avatar h2 {
+      font-weight: 500; }
+    .song-card .item-avatar p {
+      color: #3E2723; }
     .song-card .item-avatar .icon-text {
       font-size: 1em; }
 
@@ -9324,3 +9328,10 @@ a.button {
         font-size: 1.1em; }
       .player-dir .card .item p {
         font-size: 0.8em; }
+
+.popover {
+  height: inherit; }
+  .popover ion-content {
+    position: relative;
+    display: table;
+    width: 100%; }

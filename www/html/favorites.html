@@ -12,16 +12,19 @@
 			</div>
 		</div>
 
-		<div class="list card song-card" ng-repeat="res in tracks" ng-click="openSong(res)" ng-if="user.isLogin">
+		<div class="list card song-card" ng-repeat="res in tracks"  ng-if="user.isLogin">
 
-			<div class="item item-image">
+			<div class="item item-image" ng-click="openSong(res)">
 				<img ng-src="{{res.artwork_url}}">
   			</div>
 
 			<div class="item item-avatar item-icon-right">
 				<img ng-src="{{res.user.avatar_url}}">
-				<h2>{{res.title}}</h2>
-				<p>{{res.user.username}}</p> <i class="icon icon-text">{{durationToTime(res.duration)}}</i>
+				<h2 ng-click="openSong(res)">
+					{{res.title}}
+				</h2>
+				<p>{{res.user.username}} -{{durationToTime(res.duration)}}</p>
+				<i class="icon ion-android-more-vertical" ng-click="openPopover($event)"></i>
 			</div>
 
 		</div>
@@ -34,6 +37,17 @@
 				You have no favorites songs.
 			</div>
 		</div>
+
+		<script id="menu-pop.html" type="text/ng-template">
+			<ion-popover-view>
+				<ion-content>
+					<div class="list">
+						<div class="item item-icon-left"><i class="icon ion-heart"></i>Remove Favorite</div>
+						<div class="item item-icon-left"><i class="icon ion-ios-list"></i>Add To Playlist</div>
+					</div>
+				</ion-content>
+			</ion-popover-view>
+		</script>
 
 		<ion-infinite-scroll ng-if="canLoadMore()" icon="ion-loading-c" on-infinite="loadMore()" immediate-check="false"></ion-infinite-scroll>
 	</ion-content>

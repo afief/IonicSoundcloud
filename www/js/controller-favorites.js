@@ -1,4 +1,4 @@
-controll.controller("FavoritesCtrl", ["$scope", "$rootScope", "$ionicLoading", "user", function($scope, $root, $ionicLoading, user) {
+controll.controller("FavoritesCtrl", ["$scope", "$rootScope", "$ionicLoading", "user", "$ionicPopover", function($scope, $root, $ionicLoading, user, $ionicPopover) {
 	var maxResult = 28;
 	var limit = 7;
 	var offset = 0;
@@ -90,5 +90,16 @@ controll.controller("FavoritesCtrl", ["$scope", "$rootScope", "$ionicLoading", "
 			$scope.$apply();
 		}
 	}
+
+
+	/* popup on more button */
+	$ionicPopover.fromTemplateUrl('menu-pop.html', {
+		scope: $scope
+	}).then(function(popover) {
+		$scope.popover = popover;
+	});
+	$scope.openPopover = function($event) {
+		$scope.popover.show($event);
+	};
 }]);
 
