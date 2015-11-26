@@ -24,7 +24,7 @@
 					{{res.title}}
 				</h2>
 				<p>{{res.user.username}} -{{durationToTime(res.duration)}}</p>
-				<i class="icon ion-android-more-vertical" ng-click="openPopover($event)"></i>
+				<i class="icon ion-android-more-vertical" ng-click="openPopover($event, res)"></i>
 			</div>
 
 		</div>
@@ -43,7 +43,7 @@
 				<ion-content>
 					<div class="list">
 						<div class="item item-icon-left"><i class="icon ion-heart"></i>Remove Favorite</div>
-						<div class="item item-icon-left"><i class="icon ion-ios-list"></i>Add To Playlist</div>
+						<div class="item item-icon-left" ng-click="selectPlaylist()"><i class="icon ion-ios-list"></i>Add To Playlist</div>
 					</div>
 				</ion-content>
 			</ion-popover-view>

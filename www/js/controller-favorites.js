@@ -98,8 +98,14 @@ controll.controller("FavoritesCtrl", ["$scope", "$rootScope", "$ionicLoading", "
 	}).then(function(popover) {
 		$scope.popover = popover;
 	});
-	$scope.openPopover = function($event) {
+	$scope.openPopover = function($event, track) {
 		$scope.popover.show($event);
+
+		$scope.selectPlaylist = function() {
+			console.log("OK");
+			$scope.$parent.addToPlaylist(track.id);
+			$scope.popover.hide();
+		}
 	};
 }]);
 

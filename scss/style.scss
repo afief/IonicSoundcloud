@@ -339,3 +339,15 @@
 		width: 100%;
 	}
 }
+
+.playlist-modal {
+	ion-header-bar {
+		background-color: $dark2;
+		h1 {
+			color: white;
+		}
+	}
+	ion-content {
+		background-color: $dark;
+	}
+}

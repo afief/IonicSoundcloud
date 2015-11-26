@@ -1,9 +1,15 @@
+<ion-modal-view class="playlist-modal">
+	<ion-header-bar ng-click="closePlaylistModal()">
+		<h1 class="title"><i class="icon ion-chevron-down"></i> Select Playlist</h1>
+	</ion-header-bar>
+	<ion-content>
+		<div class="list card playlist-card" ng-repeat="list in playlists" ng-if="user.isLogin">
 
-	<ion-modal-view>
-	    <ion-header-bar>
-	      <h1 class="title">Select Playlist</h1>
-	    </ion-header-bar>
-	    <ion-content>
-	      Hello!
-	    </ion-content>
-    </ion-modal-view>
+			<div class="item item-icon-left" ng-click="playlistAdd(list)">
+				<div class="icon icon-text num-track">{{list.track_count}}</div>
+				<h2>{{list.title}}</h2>
+				<p>{{durationToTime(list.duration)}}</p>
+			</div>
+		</div>
+	</ion-content>
+</ion-modal-view>

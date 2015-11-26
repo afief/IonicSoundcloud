@@ -9335,3 +9335,11 @@ a.button {
     position: relative;
     display: table;
     width: 100%; }
+
+.playlist-modal ion-header-bar {
+  background-color: #3E2723; }
+  .playlist-modal ion-header-bar h1 {
+    color: white; }
+
+.playlist-modal ion-content {
+  background-color: #4E342E; }

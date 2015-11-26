@@ -105,23 +105,8 @@ controll.controller('PlayerCtrl', ['$scope', '$stateParams', '$ionicPlatform', '
 		}
 	}
 
-
-	/* Playlist */
-	$ionicModal.fromTemplateUrl('html/modal-playlist.html', {
-		scope: $scope,
-		animation: 'slide-in-up'
-	}).then(function(modal) {
-		$scope.modal = modal;
-	});
-	$scope.addSelectPlaylist = function(song_id) {
-		console.log("show");
-		$scope.modal.show();
+	$scope.addSelectPlaylist = function(track_id) {
+		$scope.$parent.addToPlaylist(track_id);
 	}
-	$scope.$on('$destroy', function() {
-		$scope.modal.remove();
-	});
-	$scope.$on('$stateChangeStart', function(e){
-		$scope.modal.remove();
-	});
 
 }]);

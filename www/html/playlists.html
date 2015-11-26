@@ -1,8 +1,6 @@
 <ion-view view-title="Playlist" class="page-playlist">
 	<ion-content>
 
-		<ion-refresher pulling-text="Pull to refresh ..." on-refresh="doRefresh()"></ion-refresher>
-
 		<div class="login-wrapper" ng-if="!user.isLogin">
 			<div class="desc">
 				You're not logged in to Soundcloud.
@@ -27,11 +25,11 @@
 
 		</div>
 
-		<div class="card" ng-if="(user.isLogin && !playlists.length && !isLoadingData)">
+		<div class="card">
 			<div class="item item-divider">
-				No Playlist
+				Create New Playlist
 			</div>
-			<div class="item item-body">
+			<div class="item item-body" ng-show="(user.isLogin && !playlists.length && !isLoadingData)">
 				You dont have any playlist. <br>Create One?
 			</div>
 			<div class="item item-input item-stacked-label">
@@ -43,6 +41,5 @@
 			</div>
 		</div>
 
-		<ion-infinite-scroll ng-if="canLoadMore()" icon="ion-loading-c" on-infinite="loadMore()" immediate-check="false"></ion-infinite-scroll>
 	</ion-content>
 </ion-view>

@@ -1,6 +1,7 @@
 <ion-side-menus enable-menu-with-back-views="true">
     <ion-side-menu-content>
-
+        
+        <!-- HEADER -->
         <ion-nav-bar class="bar-stable">
             <ion-nav-back-button></ion-nav-back-button>
 
@@ -9,12 +10,15 @@
             </ion-nav-buttons>
         </ion-nav-bar>
 
+        <!-- PLAYER DIRECTIVE -->
         <player-dir></player-dir>
 
+        <!-- CONTENTS OF EVERY PAGE -->
         <ion-nav-view name="content"></ion-nav-view>
 
     </ion-side-menu-content>
 
+    <!-- SIDE MENU -->
     <ion-side-menu side="left" expose-aside-when="large" width="80">
         <ion-content>
             <ion-list>

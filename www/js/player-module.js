@@ -16,6 +16,7 @@ playerModule.factory("player", function() {
 	var onEnded = null;
 
 	function play(track) {
+		console.log(track);
 		/* play from paused */
 		if (!track) {
 			playerEl.play();
@@ -130,7 +131,7 @@ playerModule.directive('playerDir', function() {
 		link: function (scope, element) {
 
 		},
-		controller: ['$scope', '$state', 'player', function($scope, $state, player){
+		controller: ['$scope', '$rootScope', '$state', 'player', function($scope, $root, $state, player){
 			var seekPercent = document.querySelector("#playerSeekPercent"); seekPercent.style.width = "0%";
 			var bufferPercent = document.querySelector("#playerBufferPercent"); bufferPercent.style.width = "0%";
 
@@ -142,18 +143,24 @@ playerModule.directive('playerDir', function() {
 			}
 
 			$scope.player = player;
+
+			/*
+				detect if player have a track and this is not app.play state
+			*/
 			$scope.canShowUp = function() {
 				var canShow = (player.track && ($state.current.name != 'app.play'));
 				if (canShow) {
-					console.log("can show");
+					//console.log("can show");
 					player.onTimeupdate	= onTimeupdate;
 					player.onProgress	= onProgress;
 
 					seekPercent.style.width = player.playingProgress + "%";
 					bufferPercent.style.width = player.downloadProgress + "%";
 				}
+				
 				return canShow;
 			}
+
 			$scope.doPlayPause = function() {
 				if (!player.playing) {
 					player.play();
@@ -161,6 +168,7 @@ playerModule.directive('playerDir', function() {
 					player.pause();
 				}
 			}
+
 			$scope.openPlayerPage = function() {
 				player.onTimeupdate	= null;
 				player.onProgress	= null;
